@@ -1,0 +1,6 @@
+mkdir data
+touch app.py requirements.txt README.md
+pip install streamlit pandas plotly
+pip freeze > requirements.txt
+python -m venv venv
+source venv/bin/activate  
