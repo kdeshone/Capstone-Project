@@ -5,6 +5,14 @@ import plotly.express as px
 @st.cache_data
 def load_data():
     df = pd.read_csv("data/annual_aqi_by_state_2018_2024.csv")
+
+    # 1. Drop any rows where 'year' is missing
+    df = df.dropna(subset=["year"])
+
+    # 2. Ensure 'year' is integer
+    df["year"] = df["year"].astype(int)
+
+    # 3. (Optional) Merge with full-state list to show missing avg_aqi as blank
     all_states = pd.DataFrame({
         "state": [
             "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
@@ -18,16 +26,23 @@ def load_data():
 
 df = load_data()
 
-st.title("EnviroWatch USA: Air Quality Dashboard")
+# Compute slider bounds from the cleaned data
+years = df["year"].dropna().astype(int)
+min_year, max_year = int(years.min()), int(years.max())
 
+# Sidebar slider
 year = st.sidebar.slider(
     "Select Year",
-    int(df["year"].min()),
-    int(df["year"].max()),
-    int(df["year"].min())
+    min_year,
+    max_year,
+    min_year
 )
+
+# Filter for that year
 df_year = df[df["year"] == year]
 
+# Build the map
+st.title(f"EnviroWatch USA: AQI in {year}")
 fig = px.choropleth(
     df_year,
     locations="state",
@@ -35,8 +50,7 @@ fig = px.choropleth(
     color="avg_aqi",
     scope="usa",
     color_continuous_scale="RdYlGn_r",
-    title=f"Average AQI in {year}"
+    title=f"Average AQI by State ({year})"
 )
 fig.update_traces(marker_line_color="white")
-
 st.plotly_chart(fig, use_container_width=True)
