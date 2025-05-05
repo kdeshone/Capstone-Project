@@ -3,6 +3,11 @@ import os
 import zipfile
 import pandas as pd
 
+with zipfile.ZipFile("data/raw/annual_aqi_by_county_2018.zip") as z:
+    csv_name = next(n for n in z.namelist() if n.endswith(".csv"))
+    df = pd.read_csv(z.open(csv_name), nrows=0)
+print("Columns in county file:", df.columns.tolist())
+
 # 1) ensure folders exist
 os.makedirs("data/raw", exist_ok=True)
 os.makedirs("data", exist_ok=True)
