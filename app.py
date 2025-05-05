@@ -4,15 +4,11 @@ import plotly.express as px
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/annual_aqi_by_state_2018_2024.csv")
+    # 1) Load ONLY your cleaned AQI file
+    raw = pd.read_csv("data/annual_aqi_by_state_2018_2024.csv")
+    raw["year"] = raw["year"].astype(int)    # ensure int
 
-    # 1. Drop any rows where 'year' is missing
-    df = df.dropna(subset=["year"])
-
-    # 2. Ensure 'year' is integer
-    df["year"] = df["year"].astype(int)
-
-    # 3. (Optional) Merge with full-state list to show missing avg_aqi as blank
+    # 2) Build a master list of states
     all_states = pd.DataFrame({
         "state": [
             "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
@@ -22,27 +18,26 @@ def load_data():
             "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
         ]
     })
-    return all_states.merge(df, on="state", how="left")
+
+    # 3) Merge so you get all states (with NaN avg_aqi where missing)
+    merged = all_states.merge(raw, on="state", how="left")
+    return merged
 
 df = load_data()
 
-# Compute slider bounds from the cleaned data
-years = df["year"].dropna().astype(int)
-min_year, max_year = int(years.min()), int(years.max())
+st.title("EnviroWatch USA: Air Quality Dashboard")
 
-# Sidebar slider
+# ---- slider with fixed bounds ----
 year = st.sidebar.slider(
     "Select Year",
-    min_year,
-    max_year,
-    min_year
+    2018,   # min
+    2024,   # max
+    2018    # default
 )
 
-# Filter for that year
+# filter after the slider
 df_year = df[df["year"] == year]
 
-# Build the map
-st.title(f"EnviroWatch USA: AQI in {year}")
 fig = px.choropleth(
     df_year,
     locations="state",
@@ -53,4 +48,5 @@ fig = px.choropleth(
     title=f"Average AQI by State ({year})"
 )
 fig.update_traces(marker_line_color="white")
+
 st.plotly_chart(fig, use_container_width=True)
