@@ -1,29 +1,68 @@
-EnviroWatch USA
+# EnviroWatch USA
 
-An interactive dashboard for visualizing environmental trends across the United States. Built with Streamlit, this web app displays average Air Quality Index (AQI) data by state and can be expanded to other environmental indicators like water quality, temperature, and CO₂ emissions.
+EnviroWatch USA is an interactive data visualization dashboard built with Streamlit that allows users to explore trends in air quality and carbon emissions across U.S. states from 2018 to 2024.
 
-Project Overview
+## 🌎 Overview
+This app enables comparison and trend analysis using two key environmental indicators:
+- **Air Quality Index (AQI)**: Sourced from EPA’s annual AQI reports by state.
+- **CO₂ Emissions (tons)**: Derived from EPA’s FLIGHT tool, aggregated by state and year.
 
-EnviroWatch USA is a data-driven web application developed as a graduate capstone project. It allows users to explore U.S. air quality data geographically and temporally, providing insights into pollution patterns and potential health impacts.
+Users can filter by year, choose a specific state, and switch between metrics to view:
+- A choropleth map of the selected metric
+- A line chart showing that metric’s trend over time for a selected state
 
-Features:
+## 📁 Project Structure
+```
+Capstone-Project/
+├── app.py                     # Streamlit application
+├── data/
+│   ├── annual_aqi_by_state_2018_2024.csv
+│   ├── processed_state_co2.csv
+├── scripts/                  # Processing scripts (optional)
+│   └── process_co2.py
+├── README.md
+└── requirements.txt
+```
 
-*Choropleth map of U.S. states color-coded by average AQI
+## 🧪 How to Run the App
+1. Clone this repository:
+```bash
+git clone https://github.com/your-username/Capstone-Project.git
+cd Capstone-Project
+```
 
-*Responsive interface built with Streamlit and Plotly
+2. Create a virtual environment and install dependencies:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
-*Sidebar filters for metric and time range
+3. Launch the Streamlit app:
+```bash
+streamlit run app.py
+```
 
-*Easy to extend to additional metrics (water, temperature, emissions)
+## 📊 Data Sources
+- [EPA AQI Reports](https://www.epa.gov/air-trends)
+- [EPA FLIGHT Tool](https://ghgdata.epa.gov/ghgp/main.do)
 
-Technologies Used:
+## ✅ Features
+- Dynamic year slider and state filter
+- Metric toggle between AQI and CO₂
+- Auto-zoom and state abbreviation labels on maps
+- State-level line charts over time
 
-*Python
+## 📌 Notes
+- Emissions data were cleaned and transformed from raw EPA Excel files.
+- AQI data were averaged across counties to the state level.
 
-*Streamlit
+## 🎥 Video Demo
+*To be submitted separately.*
 
-*Pandas
+## 📄 License
+MIT License — see [LICENSE](LICENSE) for details.
 
-*Plotly
-
-*Git / GitHub
+## 👥 Team
+- Your Name Here
+- Contact: your.email@example.com
