@@ -58,10 +58,7 @@ streamlit run app.py
 - AQI data were averaged across counties to the state level.
 
 ## 🎥 Video Demo
-*To be submitted separately.*
-
-## 📄 License
-MIT License — see [LICENSE](LICENSE) for details.
+🎞️ [EnviroWatch USA – Project Walkthrough](2025-05-06 21-22-01.mp4)
 
 ## 👥 Team
 - Kendall Bell
