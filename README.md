@@ -64,5 +64,5 @@ streamlit run app.py
 MIT License — see [LICENSE](LICENSE) for details.
 
 ## 👥 Team
-- Your Name Here
-- Contact: your.email@example.com
+- Kendall Bell
+- Contact: kbell44@jh.edu
